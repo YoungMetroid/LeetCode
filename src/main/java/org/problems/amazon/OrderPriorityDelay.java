@@ -5,7 +5,7 @@ import java.util.*;
 public class OrderPriorityDelay {
     public OrderPriorityDelay(){
     }
-    public static List<Integer> getPriorities(List<Integer> priorities){
+    public List<Integer> getPriorities(List<Integer> priorities){
         //n*n solution for a recap
         List<Integer> l = new ArrayList<>();
 
@@ -23,7 +23,7 @@ public class OrderPriorityDelay {
         return l;
     }
 
-    public static List<Integer> getPrioritesWithUnBalancedTree(List<Integer> priorities){
+    public List<Integer> getPrioritesWithUnBalancedTree(List<Integer> priorities){
         List<Integer> l = new ArrayList<>();
 
         for(int i = 0; i < priorities.size(); i++){

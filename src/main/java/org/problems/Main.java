@@ -1,11 +1,9 @@
 package org.problems;
 
-import org.problems.amazon.Priorities;
 import org.problems.concurrency.ConcurrentProgramming;
 import org.problems.concurrency.ParallelSegmentSort;
 import org.problems.hcl.GroupByLength;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -17,7 +15,6 @@ public class Main {
         GroupByLength groupByLength= new GroupByLength(Arrays.asList("one", "two", "three", "four", "five", "six", "seven"));
         List<List<String>> groups = groupByLength.groupWordsByCollect();
         List<String> l = groupByLength.addStringToList("f");
-        Priorities priorities = new Priorities();
         EpamCodeInterview epamCodeInterview = new EpamCodeInterview();
         ConcurrentProgramming concurrentProgramming = new ConcurrentProgramming();
 

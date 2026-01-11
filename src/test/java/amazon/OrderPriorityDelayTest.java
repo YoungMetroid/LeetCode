@@ -73,6 +73,13 @@ public class OrderPriorityDelayTest {
         assertEquals(List.of(16,11,10,9,2,7,0,5,4,3,2,1,0,0,0,0,0),l);
     }
     @Test
+    void test11WithASimpleList(){
+        List<Integer> l = orderPriorityDelay.getPrioritiesWithAList(testList1);
+        calculateTime();
+        l.stream().map(x -> x.toString() + " ").forEach(System.out::print);
+        assertEquals(List.of(16,11,10,9,2,7,0,5,4,3,2,1,0,0,0,0,0),l);
+    }
+    @Test
     void test2WithUnBalancedTree(){
         List<Integer> l = orderPriorityDelay.getPrioritesWithUnBalancedTree(testList2);
         calculateTime();
@@ -179,11 +186,16 @@ public class OrderPriorityDelayTest {
             calculateTime();
         });
     }
-    @Test
+    //@Test
     void test9WithBruteForce100MillionElements(){
             //Will take 10 min to complete
             List<Integer> l = orderPriorityDelay.getPriorities(oneHundredMillion);
             calculateTime();
+    }
+    @Test
+    void test9WithASimpleList100MillionElements(){
+        List<Integer> simpleList = orderPriorityDelay.getPrioritiesWithAList(oneHundredMillion);
+        calculateTime();
     }
     @Test
     void test10CompareResults(){
@@ -191,10 +203,12 @@ public class OrderPriorityDelayTest {
             List<Integer> unBalancedTreeAlgorithm = orderPriorityDelay.getPrioritesWithUnBalancedTree(oneMillion);
             List<Integer> bruteForceAlgorithm = orderPriorityDelay.getPriorities(oneMillion);
             assertEquals(bruteForceAlgorithm,unBalancedTreeAlgorithm);
-
         });
     }
-
-
-
+    @Test
+    void test12CompareResults(){
+            List<Integer> unBalancedTreeAlgorithm = orderPriorityDelay.getPrioritesWithUnBalancedTree(oneHundredMillion);
+            List<Integer> simpleList = orderPriorityDelay.getPrioritiesWithAList(oneHundredMillion);
+            assertEquals(simpleList,unBalancedTreeAlgorithm);
+    }
 }

@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 public class DataSetAnalysis {
 
     public DataSetAnalysis(){
-        readCarDataSet();
     }
     public void readCarDataSet(){
         CSVReader csvReader = new CSVReader("Cars Datasets 2025.csv");

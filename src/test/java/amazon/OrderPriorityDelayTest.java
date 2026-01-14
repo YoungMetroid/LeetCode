@@ -73,7 +73,7 @@ public class OrderPriorityDelayTest {
         assertEquals(List.of(16,11,10,9,2,7,0,5,4,3,2,1,0,0,0,0,0),l);
     }
     @Test
-    void test11WithASimpleList(){
+    void test1WithASimpleList(){
         List<Integer> l = orderPriorityDelay.getPrioritiesWithAList(testList1);
         calculateTime();
         l.stream().map(x -> x.toString() + " ").forEach(System.out::print);

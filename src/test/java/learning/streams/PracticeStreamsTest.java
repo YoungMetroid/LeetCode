@@ -8,9 +8,11 @@ import org.problems.CSVReader;
 import org.problems.DataSetAnalysis;
 import org.problems.dto.Car;
 import org.problems.dto.Penguin;
+import org.problems.dto.Product;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -57,5 +59,27 @@ public class PracticeStreamsTest {
         penguinSpecieList.stream().map(x-> x+" ").forEach(System.out::print);
         System.out.println();
         assertTrue(!penguinSpecieList.isEmpty());
+    }
+    @Test
+    void getPenguinCountForFemalesInBiscoe(){
+        int femailPenguinPopulationInBiscoe = practiceStreams.getAllFemailPenguinsFromBiscoeCount();
+        System.out.println(femailPenguinPopulationInBiscoe);
+        assertTrue(femailPenguinPopulationInBiscoe ==81);
+    }
+    @Test void getPenguinCountBySexInBiscoe(){
+        Map<String,Long> penguinCountBySexInBiscoe = practiceStreams.getPenguinCountBySexInBiscoe();
+        System.out.println(penguinCountBySexInBiscoe);
+        assertEquals(81, (long) penguinCountBySexInBiscoe.get("FEMALE"));
+        assertTrue(penguinCountBySexInBiscoe.get("MALE") > 0);
+    }
+    @Test void getAllProductsFromAllUsers(){
+        List<Product> productList = practiceStreams.getListofAllProducts();
+        System.out.println(productList);
+        assertFalse(productList.isEmpty());
+    }
+    @Test void getAllIdsFromProducts(){
+        List<Integer> productIds = practiceStreams.getListProductIds();
+        System.out.println(productIds);
+        assertFalse(productIds.isEmpty());
     }
 }

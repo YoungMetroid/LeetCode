@@ -6,10 +6,7 @@ import org.problems.dto.Penguin;
 import org.problems.dto.Product;
 import org.problems.dto.User;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -34,6 +31,14 @@ public class PracticeStreams {
     public PracticeStreams(){
     }
 
+    public Optional<Product> findFirstProduct(int value){
+        return users.stream()
+                .flatMap(user -> user.products().stream())
+                .filter(v -> v.id() == value)
+                .findFirst();
+
+
+    }
     public List<Product> getListofAllProducts(){
         return users.stream().flatMap(x->x.products().stream()).collect(Collectors.toList());
     }
@@ -89,4 +94,11 @@ public class PracticeStreams {
 
         return penguinCountBySexInBiscoe;
     }
+    public Map<String,List<Penguin>> groupPenguinsBySexInBiscoe(){
+        return penguinList.stream()
+                .filter(x-> "Biscoe".equals(x.island()))
+                .collect(Collectors.groupingBy(Penguin::sex));
+    }
+
+
 }

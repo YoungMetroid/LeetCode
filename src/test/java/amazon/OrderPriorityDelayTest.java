@@ -9,6 +9,10 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -26,8 +30,11 @@ public class OrderPriorityDelayTest {
     static OrderPriorityDelay orderPriorityDelay;
     static Random random = new Random();
     long startTime ;
+
+    static ExecutorService executor;
     @BeforeAll
     static void setup(){
+        executor = Executors.newFixedThreadPool(2);
         orderPriorityDelay = new OrderPriorityDelay();
         testList1 = List.of(100,3,6,7,1,2,0,3,5,7,6,9,1,12,14,16,20);
         testList2 = List.of(8,2,5,3);
@@ -210,5 +217,37 @@ public class OrderPriorityDelayTest {
             List<Integer> unBalancedTreeAlgorithm = orderPriorityDelay.getPrioritesWithUnBalancedTree(oneHundredMillion);
             List<Integer> simpleList = orderPriorityDelay.getPrioritiesWithAList(oneHundredMillion);
             assertEquals(simpleList,unBalancedTreeAlgorithm);
+    }
+    @Test
+    void test13Threads() throws ExecutionException, InterruptedException {
+        List<Future<List<Integer>>> futures = new ArrayList<>();
+        futures.add(executor.submit(()->
+            {
+                String threadName = Thread.currentThread().getName();
+                System.out.println("Task " + "With List" + " running in " + threadName);
+                return orderPriorityDelay.getPrioritiesWithAList(oneHundredMillion);
+            }));
+        futures.add(executor.submit(()->
+        {
+            String threadName = Thread.currentThread().getName();
+            System.out.println("Task " + "With Tree" + " running in " + threadName);
+            return orderPriorityDelay.getPrioritesWithUnBalancedTree(oneMillion);
+        }));
+        futures.add(executor.submit(()->
+        {
+            String threadName = Thread.currentThread().getName();
+            System.out.println("Task " + "With Brute Force" + " running in " + threadName);
+            return orderPriorityDelay.getPriorities(tenMillion);
+        }));
+
+
+
+        List<List<Integer>> allResults = new ArrayList<>();
+        for(Future<List<Integer>> f : futures){
+            allResults.add(new ArrayList<>());
+            allResults.get(allResults.size()-1).addAll(f.get());
+            System.out.println("Finished");
+        }
+        System.out.println("Results");
     }
 }

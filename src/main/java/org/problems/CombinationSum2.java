@@ -8,33 +8,29 @@ import java.util.List;
 public class CombinationSum2 {
 
     public CombinationSum2(){}
-
-    public List<List<Integer>> combinationSum2(int[] candidates, int target){
-
-        List<List<Integer>> list = new LinkedList<>();
+    List<List<Integer>> allCombos = new ArrayList<>();
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
         Arrays.sort(candidates);
-        backtrack(list, new ArrayList<>(),candidates,target,0);
-        return list;
+
+        backtrack(candidates,target,0,new ArrayList<Integer>(),0);
+        return allCombos;
     }
-    private void backtrack(
-            List<List<Integer>> answer,
-            List<Integer> tempList,
-            int[] candidates,
-            int totalLeft,
-            int index){
 
-        if(totalLeft < 0 ) return;
-
-        if(totalLeft == 0){
-            answer.add(new ArrayList<>(tempList));
-        }
-        else{
-            for(int i=index; i < candidates.length && totalLeft>= candidates[i]; i++) {
-                if (i > index && candidates[i] == candidates[i - 1]) continue;
-                tempList.add(candidates[i]);
-                backtrack(answer, tempList, candidates, totalLeft - candidates[i], i + 1);
-                tempList.removeLast();
+    public void backtrack(int[] candidates, int target, int index, List<Integer> combo,int sum){
+        for(int i = index; i < candidates.length; i++){
+            if(i > index && candidates[i] == candidates[i-1]) continue;
+            if(sum + candidates[i] == target){
+                combo.add(candidates[i]);
+                allCombos.add(new ArrayList<>(combo));
+                return;
             }
+
+            else if(sum + candidates[i] < target){
+                combo.add(candidates[i]);
+                backtrack(candidates,target, i+1,new ArrayList<>(combo),sum + candidates[i]);
+                combo.removeLast();
+            }
+            else return;
         }
     }
 }

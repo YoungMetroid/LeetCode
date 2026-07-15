@@ -40,6 +40,12 @@ public class PracticeStreams {
     public List<Integer> getListProductIds(){
         return users.stream().flatMap(x->x.products().stream().map(Product::id)).collect(Collectors.toList());
     }
+    public String concatAllProductName(){
+        return users.stream()
+                .flatMap(x->x.products().stream())
+                .map(Product::name)
+                .reduce("",String::concat);
+    }
     public List<Integer> filterByEvenNumbersMutable(List<Integer> list){
 
         return list.stream().filter(x-> x%2 ==0).collect(Collectors.toList());

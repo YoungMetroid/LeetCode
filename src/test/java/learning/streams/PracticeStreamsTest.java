@@ -82,4 +82,9 @@ public class PracticeStreamsTest {
         System.out.println(productIds);
         assertFalse(productIds.isEmpty());
     }
+    @Test void concatenateAllProductNames(){
+        String s = practiceStreams.concatAllProductName();
+        System.out.println(s);
+        assertTrue(!s.isEmpty());
+    }
 }
